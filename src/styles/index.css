@@ -1,3 +1,46 @@
 /* 
     General Styles
 */
+
+body {
+    background-color: #e7f9ff;;
+}
+
+* {
+    box-sizing: content-box !important;
+  }
+  
+  .row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+    flex-wrap: wrap;
+  }
+  .row > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label:hover {
+    color: #94baca;
+  }
+  
+  
+  
+  .trip_card {
+    border-radius: 12% !important;
+    box-shadow:  18px 18px 30px #bcbcbc,
+               -18px -18px 30px #ffffff;
+    background-image: linear-gradient(to bottom, #336b87, #487b95, #5d8ca4, #719db3, #85aec2, #94baca, #a3c6d3, #b3d2dc, #c2dae0, #d1e2e5, #e0eaeb, #f0f2f2);
+  }
+  
+  .matches_title {
+    color: #336b87;
+    font-weight: bold;
+  }
+  
+.btn:hover {
+    background-color:#336b87;
+    color: #e7f9ff;
+}  
