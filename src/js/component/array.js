@@ -5,7 +5,8 @@ export const arr = [
         country: "Chile",
         city: "Santiago",
         start_date: "1/1/1",
-        end_date: "2/2/2"
+        end_date: "2/2/2",
+        traveling: 1,
     },
     {
         user: "Mary",
@@ -13,7 +14,8 @@ export const arr = [
         country: "Chile",
         city: "Santiago",
         start_date: "1/1/1",
-        end_date: "2/2/2"
+        end_date: "2/2/2",
+        traveling: 2
     },
     {
         user: "Todd",
@@ -21,7 +23,8 @@ export const arr = [
         country: "Chile",
         city: "Santiago",
         start_date: "1/1/1",
-        end_date: "2/2/2"
+        end_date: "2/2/2",
+        traveling: 3
     },
     {
         user: "Lori",
@@ -29,7 +32,8 @@ export const arr = [
         country: "Chile",
         city: "Santiago",
         start_date: "1/1/1",
-        end_date: "2/2/2"
+        end_date: "2/2/2",
+        traveling: 1
     },
     {
         user: "Pete",
@@ -37,7 +41,8 @@ export const arr = [
         country: "Chile",
         city: "Santiago",
         start_date: "1/1/1",
-        end_date: "2/2/2"
+        end_date: "2/2/2",
+        traveling: 2
     },
     {   
         user: "Dude",
