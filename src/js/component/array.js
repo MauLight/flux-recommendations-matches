@@ -7,6 +7,7 @@ export const arr = [
         start_date: "1/1/1",
         end_date: "2/2/2",
         traveling: 1,
+        children: 1,
     },
     {
         user: "Mary",
@@ -15,7 +16,8 @@ export const arr = [
         city: "Santiago",
         start_date: "1/1/1",
         end_date: "2/2/2",
-        traveling: 2
+        traveling: 2,
+        children: 1,
     },
     {
         user: "Todd",
@@ -24,7 +26,8 @@ export const arr = [
         city: "Santiago",
         start_date: "1/1/1",
         end_date: "2/2/2",
-        traveling: 3
+        traveling: 3,
+        children: 2,
     },
     {
         user: "Lori",
@@ -33,7 +36,8 @@ export const arr = [
         city: "Santiago",
         start_date: "1/1/1",
         end_date: "2/2/2",
-        traveling: 1
+        traveling: 1,
+        children: 1,
     },
     {
         user: "Pete",
@@ -42,7 +46,8 @@ export const arr = [
         city: "Santiago",
         start_date: "1/1/1",
         end_date: "2/2/2",
-        traveling: 2
+        traveling: 2,
+        children: 2,
     },
     {   
         user: "Dude",

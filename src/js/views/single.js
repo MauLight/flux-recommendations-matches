@@ -29,7 +29,7 @@ const OffCanvasBtn = () => {
 
 export const Single = () => {
 
-	const [trips, useTrip] = useState(arr);
+	const [trips, setTrips] = useState(arr);
 	const [user_trip, setuser_trip] = useState({
 		user: "Bud",
 		country: "Chile",
@@ -51,12 +51,28 @@ export const Single = () => {
 		console.log(e.target.value)
 	}
 
-	const handleChange = (e) => {
+	const handleTravel = (e) => {
 		//e.preventDefault();
 		console.log(e.target.value);
 		const filter_val = e.target.value;
 		const filter = arr.filter(elem => elem.traveling == filter_val);
+		setTrips(filter);
 		console.log(filter);
+		console.log(trips);
+	}
+
+	const handleChildren = (e) => {
+		//e.preventDefault();
+		console.log(e.target.value);
+		const filter_val = e.target.value;
+		const filter = arr.filter(elem => elem.children == filter_val);
+		setTrips(filter);
+		console.log(filter);
+		console.log(trips);
+	}
+	const handleChange = (e) => {
+		//e.preventDefault();
+		console.log(e.target.value);
 	}
 
 	//STATE VARIABLES
@@ -79,14 +95,12 @@ export const Single = () => {
 				<h1 className='matches_title mb-2'>Your Matches!</h1>
 				<OffCanvasBtn className='float-end' />
 			</div>
-			<div>
-				<button className="btn" onClick={handleClick}>Click!</button>
-			</div>
 			<div className="row d-flex mx-auto justify-content-center">
 
 				{
 					!!trips && trips.length > 0 ? (
 						trips.map((trip, i) => {
+							const filter_val = 1;
 							if (trip.country === user_trip.country && trip.city === user_trip.city && trip.start_date === user_trip.start_date) {
 								return (
 									<div className='col-3 justify-content-center p-3' key={i}>
@@ -107,6 +121,7 @@ export const Single = () => {
 									</div>
 								)
 							}
+
 							else {
 								return ""
 							}
@@ -130,15 +145,15 @@ export const Single = () => {
 						<div className="col">
 							<p>Traveling...</p>
 							<div className='form-check form-check-inline'>
-								<input className='form-check-input' key={1} type='radio' onChange={handleChange} name='travelling' id='inlineRadio1' value={1} />
+								<input className='form-check-input' key={1} type='radio' onChange={handleTravel} name='travelling' id='inlineRadio1' value={1} />
 								<label className='form-check-label' htmlFor='inlineRadio1'>Alone</label>
 							</div>
 							<div className='form-check form-check-inline'>
-								<input className='form-check-input' key={2} type='radio' onChange={handleChange} name='travelling' id='inlineRadio2' value={2} />
+								<input className='form-check-input' key={2} type='radio' onChange={handleTravel} name='travelling' id='inlineRadio2' value={2} />
 								<label className='form-check-label' htmlFor='inlineRadio2'>Couple</label>
 							</div>
 							<div className='form-check form-check-inline'>
-								<input className='form-check-input' key={3} type='radio' onChange={handleChange} name='travelling' id='inlineRadio3' value={3} />
+								<input className='form-check-input' key={3} type='radio' onChange={handleTravel} name='travelling' id='inlineRadio3' value={3} />
 								<label className='form-check-label' htmlFor='inlineRadio3'>Group</label>
 							</div>
 
@@ -148,11 +163,11 @@ export const Single = () => {
 
 							<p>With children?</p>
 							<div className='form-check form-check-inline'>
-								<input className='form-check-input' type='radio' name='with_children' id='inlineRadio1' onChange={handleChange} value={children} />
+								<input className='form-check-input' type='radio' name='with_children' id='inlineRadio1' onChange={handleChildren} value={1} />
 								<label className='form-check-label' htmlFor='inlineRadio1'>Yes</label>
 							</div>
 							<div className='form-check form-check-inline'>
-								<input className='form-check-input' type='radio' name='with_children' id='inlineRadio2' onChange={handleChange} value={children + 1} />
+								<input className='form-check-input' type='radio' name='with_children' id='inlineRadio2' onChange={handleChildren} value={2} />
 								<label className='form-check-label' htmlFor='inlineRadio2'>No</label>
 							</div>
 
