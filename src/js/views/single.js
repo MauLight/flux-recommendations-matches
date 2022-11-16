@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { arr } from "../component/array";
@@ -29,6 +29,8 @@ const OffCanvasBtn = () => {
 
 export const Single = () => {
 
+	//STATE VARIABLES
+	//Fetch user_trip and allusers_trips
 	const [trips, setTrips] = useState(arr);
 	const [user_trip, setuser_trip] = useState({
 		user: "Bud",
@@ -38,57 +40,170 @@ export const Single = () => {
 		end_date: "2/2/2"
 	});
 
-	const handleClick = () => {
-		console.log(arr);
-		console.log(traveling);
-		const filter = arr.filter(elem => elem.traveling == traveling);
-		console.log(filter);
+	//Keep a record of sorted arrays (to add/remove filters).
+	const [history, setHistory] = useState([]);
+	const [stepNumber, setStepNumber] = useState(0);
 
-	}
-
-	const handleBudget = (e) => {
-		setBudget(e.target.value)
-		console.log(e.target.value)
-	}
-
-	const handleTravel = (e) => {
-		//e.preventDefault();
-		console.log(e.target.value);
-		const filter_val = e.target.value;
-		const filter = arr.filter(elem => elem.traveling == filter_val);
-		setTrips(filter);
-		console.log(filter);
-		console.log(trips);
-	}
-
-	const handleChildren = (e) => {
-		//e.preventDefault();
-		console.log(e.target.value);
-		const filter_val = e.target.value;
-		const filter = arr.filter(elem => elem.children == filter_val);
-		setTrips(filter);
-		console.log(filter);
-		console.log(trips);
-	}
-	const handleChange = (e) => {
-		//e.preventDefault();
-		console.log(e.target.value);
-	}
-
-	//STATE VARIABLES
+	//Individual variables state.
 	const [traveling, setTraveling] = useState(0);
-	const [children, setChildren] = useState(1);
+	const [children, setChildren] = useState(0);
 	const [budget, setBudget] = useState('');
 	const [activity, setActivity] = useState(1);
 	const [gender, setGender] = useState(1);
 	const [age, setAge] = useState(1);
 	const [stay, setStay] = useState(1);
 
+	//Individual filter state.
+	const [travelArr, setTravelArr] = useState([]);
+	const [childrenArr, setChildrenArr] = useState([]);
+	const [activityArr, setActivityArr] = useState([]);
+
+	//Filter Functions.
+
+	const handleTravel = (e) => {
+		//console.log(e.target.value);
+		const value = e.target.value;
+		const filterFunction = (elem) => {
+
+			if (elem.traveling == value) {
+				return elem;
+			}
+			else {
+				console.log('no matches!')
+			}
+		};
+		const filter = arr.filter(filterFunction);
+		//console.log(filter);
+		setTrips(filter);
+		setTravelArr(filter);
+		//console.log(travelArr);
+	};
+
+	const handleChildren = (e) => {
+		//console.log(e.target.value);
+		//console.log(travelArr);
+		const value = e.target.value;
+		const filterFunction = (elem) => {
+
+			if (elem.children == value) {
+				return elem;
+			}
+			else {
+				console.log('no matches!')
+			}
+		};
+		const filter = travelArr.length > 0 ? travelArr.filter(filterFunction) : arr.filter(filterFunction);
+		//console.log(filter);
+		setTrips(filter);
+		setChildrenArr(filter);
+		//console.log(childrenArr);
+	};
+
+	const handleActivity = (e) => {
+		console.log(e.target.value);
+		console.log(childrenArr);
+		const value = e.target.value;
+		const filterFunction = (elem) => {
+
+			if (elem.activity == value) {
+				return elem;
+			}
+			else {
+				console.log('no matches!')
+			}
+		};
+		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+		const filter1 = childrenArr.filter(filterFunction);
+		const filter2 = travelArr.filter(filterFunction);
+		const filter3 = arr.filter(filterFunction);
+
+		if (childrenArr.length > 0) {
+			console.log(filter1);
+			setTrips(filter1);
+			setActivityArr(filter1);
+			console.log(filter1);
+			;
+		}
+		else if (childrenArr.length == 0 && travelArr.length == 0) {
+			console.log(filter3);
+			setTrips(filter3);
+			setActivityArr(filter3);
+			console.log(filter3);
+		}
+		else if (childrenArr.length == 0) {
+			console.log(filter2);
+			setTrips(filter2);
+			setActivityArr(filter2);
+			console.log(filter2);
+		};
+
+
+	};
+
+	const handleBudget = (e) => {
+		setBudget(e.target.value)
+		console.log(e.target.value)
+	};
+
+	const handleChange = (e) => {
+		//e.preventDefault();
+		console.log(e.target.value);
+	};
+
 	useEffect(() => {
-		return
-	}, [traveling]);
+		console.log(travelArr);
+	});
 
 
+	/*
+		const handleClick = () => {
+			console.log(arr);
+			console.log(traveling);
+			const filter = arr.filter(elem => elem.traveling == traveling);
+			console.log(filter);
+		
+		}
+		
+		const handleBudget = (e) => {
+			setBudget(e.target.value)
+			console.log(e.target.value)
+		}
+		
+		const handleTravel = (e) => {
+		
+			const filterFunction = (elem) => {
+		
+				if (elem.traveling == filter_val) {
+					return elem;
+				}
+				else {
+					console.log('no matches!')
+				}
+			};
+			//e.preventDefault();
+			console.log(e.target.value);
+			const filter_val = e.target.value;
+			const filter = arr.filter(filterFunction);
+			setTrips(filter);
+			console.log(filter);
+			console.log(trips);
+		};
+		
+		const handleChildren = (e) => {
+			//e.preventDefault();
+			//setTrips([...trips]);
+			//console.log(e.target.value);
+			const filter_val = e.target.value;
+			//const filter = history.current.filter(elem => elem.children == filter_val);
+			setChildren(filter_val);
+			//console.log(filter);
+			console.log(children);
+		}
+		const handleChange = (e) => {
+			//e.preventDefault();
+			console.log(e.target.value);
+		}
+	*/
 	return (
 		<div className="container">
 			<div className="mb-5">
@@ -114,9 +229,6 @@ export const Single = () => {
 													<p className="trip_text card-text px-2">{trip.user} goes to {trip.city}, {trip.country} on the same date!</p>
 												</div>
 											</div>
-
-
-
 										</div>
 									</div>
 								)
@@ -136,7 +248,7 @@ export const Single = () => {
 			</div>
 			<div className="offcanvas offcanvas-end" data-bs-scroll="false" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
 				<div className="offcanvas-header">
-					<h5 className="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
+					<h5 className="offcanvas-title" id="offcanvasScrollingLabel">Preferences</h5>
 					<button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 				</div>
 				<div className="offcanvas-body">
@@ -189,26 +301,26 @@ export const Single = () => {
 							<div className='row'>
 								<div className='col col-md-12'>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' id='inlineCheckbox1' value={activity} onChange={handleChange} name='activities' />
+										<input className='form-check-input' type='radio' id='inlineCheckbox1' value={1} onChange={handleActivity} name='activities' />
 										<label className='form-check-label' htmlFor='inlineCheckbox1'>Trekking</label>
 									</div>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' id='inlineCheckbox2' value={activity + 1} onChange={handleChange} name='activities' />
+										<input className='form-check-input' type='radio' id='inlineCheckbox2' value={2} onChange={handleActivity} name='activities' />
 										<label className='form-check-label' htmlFor='inlineCheckbox2'>Restaurants</label>
 									</div>
 
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' id='inlineCheckbox3' value={activity + 2} onChange={handleChange} name='activities' />
+										<input className='form-check-input' type='radio' id='inlineCheckbox3' value={3} onChange={handleActivity} name='activities' />
 										<label className='form-check-label' htmlFor='inlineCheckbox3'>Museums</label>
 									</div>
 								</div>
 								<div className='col col-md-12'>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' id='inlineCheckbox4' value={activity + 3} onChange={handleChange} name='activities' />
+										<input className='form-check-input' type='radio' id='inlineCheckbox4' value={4} onChange={handleActivity} name='activities' />
 										<label className='form-check-label' htmlFor='inlineCheckbox3'>Disco & Nights Out</label>
 									</div>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' id='inlineCheckbox5' value={activity + 4} onChange={handleChange} name='activities' />
+										<input className='form-check-input' type='radio' id='inlineCheckbox5' value={5} onChange={handleActivity} name='activities' />
 										<label className='form-check-label' htmlFor='inlineCheckbox3'>Malls & Shopping</label>
 									</div>
 								</div>
@@ -299,6 +411,10 @@ export const Single = () => {
 						</div>
 
 					</form>
+					<div className="col my-3">
+						<button className="btn" onClick={() => setTrips(arr)}>Reset</button>
+					</div>
+
 				</div>
 			</div>
 		</div>
