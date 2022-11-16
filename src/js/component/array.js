@@ -9,6 +9,9 @@ export const arr = [
         traveling: 1,
         children: 1,
         activity: 2,
+        gender: 3,
+        age: 8,
+        stay: 1,
     },
     {
         user: "Mary",
@@ -20,6 +23,9 @@ export const arr = [
         traveling: 1,
         children: 2,
         activity: 3,
+        gender: 1,
+        age: 2,
+        stay: 4,
     },
     {
         user: "Todd",
@@ -31,6 +37,9 @@ export const arr = [
         traveling: 3,
         children: 2,
         activity: 1,
+        gender: 2,
+        age: 3,
+        stay: 2,
     },
     {
         user: "Lori",
@@ -42,6 +51,9 @@ export const arr = [
         traveling: 1,
         children: 1,
         activity: 5,
+        gender: 1,
+        age: 6,
+        stay: 1,
     },
     {
         user: "Pete",
@@ -53,6 +65,9 @@ export const arr = [
         traveling: 2,
         children: 2,
         activity: 4,
+        gender: 3,
+        age: 4,
+        stay: 2,
     },
 
     {
@@ -65,6 +80,9 @@ export const arr = [
         traveling: 1,
         children: 2,
         activity: 3,
+        gender: 2,
+        age:7,
+        stay: 4,
     },
 
     {
@@ -77,6 +95,9 @@ export const arr = [
         traveling: 2,
         children: 2,
         activity: 2,
+        gender: 1,
+        age: 5,
+        stay: 3,
     },
     {
         user: "Milly",
@@ -88,6 +109,9 @@ export const arr = [
         traveling: 3,
         children: 2,
         activity: 1,
+        gender: 3,
+        age: 1,
+        stay: 2,
     },
     {
         user: "Kile",
@@ -99,6 +123,9 @@ export const arr = [
         traveling: 3,
         children: 1,
         activity: 5,
+        gender: 2,
+        age: 2,
+        stay: 3,
     },
 
     {   

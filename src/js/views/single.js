@@ -57,6 +57,9 @@ export const Single = () => {
 	const [travelArr, setTravelArr] = useState([]);
 	const [childrenArr, setChildrenArr] = useState([]);
 	const [activityArr, setActivityArr] = useState([]);
+	const [genderArr, setGenderArr] = useState([]);
+	const [ageArr, setAgeArr] = useState([]);
+	const [stayArr, setStayArr] = useState([]);
 
 	//Filter Functions.
 
@@ -136,7 +139,170 @@ export const Single = () => {
 			setActivityArr(filter2);
 			console.log(filter2);
 		};
+	}
 
+		const handleGender = (e) => {
+			console.log(e.target.value);
+			console.log(activityArr);
+			const value = e.target.value;
+			const filterFunction = (elem) => {
+
+				if (elem.gender == value) {
+					return elem;
+				}
+				else {
+					console.log('no matches!')
+				}
+			};
+			//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+			const filter1 = activityArr.filter(filterFunction);
+			const filter2 = childrenArr.filter(filterFunction);
+			const filter3 = travelArr.filter(filterFunction);
+			const filter4 = arr.filter(filterFunction);
+
+			if (activityArr.length > 0) {
+				console.log(filter1);
+				setTrips(filter1);
+				setGenderArr(filter1);
+				console.log(filter1);
+			}
+			else if (activityArr.length == 0 && childrenArr.length > 0) {
+				console.log(filter2);
+				setTrips(filter2);
+				setGenderArr(filter2);
+				console.log(filter2);
+			}
+
+			else if (activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+				console.log(filter3);
+				setTrips(filter3);
+				setGenderArr(filter3);
+				console.log(filter3);
+			}
+
+			else if (activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+				console.log(filter4);
+				setTrips(filter4);
+				setGenderArr(filter4);
+				console.log(filter4);
+			};
+
+	};
+
+		const handleAge = (e) => {
+			console.log(e.target.value);
+			console.log(genderArr);
+			const value = e.target.value;
+			const filterFunction = (elem) => {
+
+				if (elem.age == value) {
+					return elem;
+				}
+				else {
+					console.log('no matches!')
+				}
+			};
+			//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+			const filter1 = genderArr.filter(filterFunction);
+			const filter2 = activityArr.filter(filterFunction);
+			const filter3 = childrenArr.filter(filterFunction);
+			const filter4 = travelArr.filter(filterFunction);
+			const filter5 = arr.filter(filterFunction);
+
+			if (genderArr.length > 0) {
+				console.log(filter1);
+				setTrips(filter1);
+				setAgeArr(filter1);
+				console.log(filter1);
+			}
+			else if (genderArr.length == 0 && activityArr.length > 0) {
+				console.log(filter2);
+				setTrips(filter2);
+				setAgeArr(filter2);
+				console.log(filter2);
+			}
+			else if (genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+				console.log(filter3);
+				setTrips(filter3);
+				setAgeArr(filter3);
+				console.log(filter3);
+			}
+
+			else if (genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+				console.log(filter4);
+				setTrips(filter4);
+				setAgeArr(filter4);
+				console.log(filter4);
+			}
+
+			else if (genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+				console.log(filter5);
+				setTrips(filter5);
+				setAgeArr(filter5);
+				console.log(filter5);
+			};
+
+	};
+
+		const handleStay = (e) => {
+			console.log(e.target.value);
+			console.log(ageArr);
+			const value = e.target.value;
+			const filterFunction = (elem) => {
+
+				if (elem.stay == value) {
+					return elem;
+				}
+				else {
+					console.log('no matches!')
+				}
+			};
+			//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+			const filter1 = ageArr.filter(filterFunction);
+			const filter2 = genderArr.filter(filterFunction);
+			const filter3 = activityArr.filter(filterFunction);
+			const filter4 = childrenArr.filter(filterFunction);
+			const filter5 = travelArr.filter(filterFunction);
+			const filter6 = arr.filter(filterFunction);
+
+			if (ageArr.length > 0) {
+				console.log(filter1);
+				setTrips(filter1);
+				setStayArr(filter1);
+				console.log(filter1);
+			}
+			if (ageArr.length == 0 && genderArr.length > 0) {
+				console.log(filter2);
+				setTrips(filter2);
+				setStayArr(filter2);
+				console.log(filter2);
+			}
+			else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+				console.log(filter3);
+				setTrips(filter3);
+				setStayArr(filter3);
+				console.log(filter3);
+			}
+			else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+				console.log(filter4);
+				setTrips(filter4);
+				setStayArr(filter4);
+				console.log(filter4);
+			}
+
+			else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+				console.log(filter5);
+				setTrips(filter5);
+				setStayArr(filter5);
+				console.log(filter5);
+			}
+
+			else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+				console.log(filter6);
+				setTrips(filter6);
+				setStayArr(filter6);
+				console.log(filter6);
+			};
 
 	};
 
@@ -149,10 +315,6 @@ export const Single = () => {
 		//e.preventDefault();
 		console.log(e.target.value);
 	};
-
-	useEffect(() => {
-		console.log(travelArr);
-	});
 
 
 	/*
@@ -332,15 +494,15 @@ export const Single = () => {
 
 							<p>Do you prefer a specific gender?</p>
 							<div className='form-check form-check-inline'>
-								<input className='form-check-input' type='radio' name='gender_specific' id='inlineRadio1' onChange={handleChange} value={gender} />
+								<input className='form-check-input' type='radio' name='gender_specific' id='inlineRadio1' onChange={handleGender} value={1} />
 								<label className='form-check-label' htmlFor='inlineRadio1'>Woman</label>
 							</div>
 							<div className='form-check form-check-inline'>
-								<input className='form-check-input' type='radio' name='gender_specific' id='inlineRadio2' onChange={handleChange} value={gender + 1} />
+								<input className='form-check-input' type='radio' name='gender_specific' id='inlineRadio2' onChange={handleGender} value={2} />
 								<label className='form-check-label' htmlFor='inlineRadio2'>Man</label>
 							</div>
 							<div className='form-check form-check-inline'>
-								<input className='form-check-input' type='radio' name='gender_specific' id='inlineRadio3' onChange={handleChange} value={gender + 2} />
+								<input className='form-check-input' type='radio' name='gender_specific' id='inlineRadio3' onChange={handleGender} value={3} />
 								<label className='form-check-label' htmlFor='inlineRadio3'>I don't believe in binary gender labelling</label>
 							</div>
 
@@ -352,37 +514,37 @@ export const Single = () => {
 							<div className='row'>
 								<div className='col-md-12 col-2'>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio4' onChange={handleChange} value={age} />
+										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio4' onChange={handleAge} value={1} />
 										<label className='form-check-label' htmlFor='inlineRadio4'>18-24</label>
 									</div>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio5' onChange={handleChange} value={age + 1} />
+										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio5' onChange={handleAge} value={2} />
 										<label className='form-check-label' htmlFor='inlineRadio5'>25-31</label>
 									</div>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio6' onChange={handleChange} value={age + 2} />
+										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio6' onChange={handleAge} value={3} />
 										<label className='form-check-label' htmlFor='inlineRadio6'>32-38</label>
 									</div>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio7' onChange={handleChange} value={age + 3} />
+										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio7' onChange={handleAge} value={4} />
 										<label className='form-check-label' htmlFor='inlineRadio7'>39-45</label>
 									</div>
 								</div>
 								<div className='col-md-12 col-2'>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio8' onChange={handleChange} value={age + 4} />
+										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio8' onChange={handleAge} value={5} />
 										<label className='form-check-label' htmlFor='inlineRadio8'>45-51</label>
 									</div>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio9' onChange={handleChange} value={age + 5} />
+										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio9' onChange={handleAge} value={6} />
 										<label className='form-check-label' htmlFor='inlineRadio9'>52-59</label>
 									</div>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio10' onChange={handleChange} value={age + 6} />
+										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio10' onChange={handleAge} value={7} />
 										<label className='form-check-label' htmlFor='inlineRadio10'>60+</label>
 									</div>
 									<div className='form-check form-check-inline'>
-										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio11' onChange={handleChange} value={age + 7} />
+										<input className='form-check-input' type='radio' name='partner_age' id='inlineRadio11' onChange={handleAge} value={8} />
 										<label className='form-check-label' htmlFor='inlineRadio11'>I don't have an age preference</label>
 									</div>
 								</div>
@@ -393,19 +555,19 @@ export const Single = () => {
 
 							<p>Where do you plan to stay?</p>
 							<div className='form-check'>
-								<input className='form-check-input' type='radio' name='stay' id='Radio1' onChange={handleChange} value={stay} />
+								<input className='form-check-input' type='radio' name='stay' id='Radio1' onChange={handleStay} value={1} />
 								<label className='form-check-label' htmlFor='Radio1'>Hotel</label>
 							</div>
 							<div className='form-check'>
-								<input className='form-check-input' type='radio' name='stay' id='Radio2' onChange={handleChange} value={stay + 1} />
+								<input className='form-check-input' type='radio' name='stay' id='Radio2' onChange={handleStay} value={2} />
 								<label className='form-check-label' htmlFor='Radio2'>Apartment/Airbnb</label>
 							</div>
 							<div className='form-check'>
-								<input className='form-check-input' type='radio' name='stay' id='Radio3' onChange={handleChange} value={stay + 2} />
+								<input className='form-check-input' type='radio' name='stay' id='Radio3' onChange={handleStay} value={3} />
 								<label className='form-check-label' htmlFor='Radio3'>Camping</label>
 							</div>
 							<div className='form-check'>
-								<input className='form-check-input' type='radio' name='stay' id='Radio4' onChange={handleChange} value={stay + 3} />
+								<input className='form-check-input' type='radio' name='stay' id='Radio4' onChange={handleStay} value={4} />
 								<label className='form-check-label' htmlFor='Radio4'>I'll stay at someone else's.</label>
 							</div>
 						</div>
