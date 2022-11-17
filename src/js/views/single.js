@@ -62,9 +62,36 @@ export const Single = () => {
 	const [stayArr, setStayArr] = useState([]);
 
 	//Filter Functions.
+	/*
+		const handleTravel = (e) => {
+			//console.log(e.target.value);
+			const value = e.target.value;
+			const filterFunction = (elem) => {
+	
+				if (elem.traveling == value) {
+					return elem;
+				}
+				else {
+					console.log('no matches!')
+				}
+			};
+			const filter = arr.filter(filterFunction);
+			//console.log(filter);
+			setTrips(filter);
+			setTravelArr(filter);
+			//console.log(travelArr);
+		};
+		*/
 
 	const handleTravel = (e) => {
-		//console.log(e.target.value);
+		console.log(e.target.value);
+		console.log(ageArr);
+		console.log(genderArr);
+		console.log(activityArr);
+		console.log(childrenArr);
+		console.log(travelArr);
+		console.log(arr);
+
 		const value = e.target.value;
 		const filterFunction = (elem) => {
 
@@ -75,16 +102,63 @@ export const Single = () => {
 				console.log('no matches!')
 			}
 		};
-		const filter = arr.filter(filterFunction);
-		//console.log(filter);
-		setTrips(filter);
-		setTravelArr(filter);
-		//console.log(travelArr);
+		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+		const filter1 = ageArr.filter(filterFunction);
+		const filter2 = genderArr.filter(filterFunction);
+		const filter3 = activityArr.filter(filterFunction);
+		const filter4 = childrenArr.filter(filterFunction);
+		const filter5 = travelArr.filter(filterFunction);
+		const filter6 = arr.filter(filterFunction);
+
+		if (ageArr.length > 0) {
+			setTrips(filter1);
+			setTravelArr(filter1);
+			console.log(filter1);
+		}
+		if (ageArr.length == 0 && genderArr.length > 0) {
+			console.log(filter2);
+			setTrips(filter2);
+			setTravelArr(filter2);
+			console.log(filter2);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+			console.log(filter3);
+			setTrips(filter3);
+			setTravelArr(filter3);
+			console.log(filter3);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+			console.log(filter4);
+			setTrips(filter4);
+			setTravelArr(filter4);
+			console.log(filter4);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+			console.log(filter5);
+			setTrips(filter6);
+			setTravelArr(filter6);
+			console.log(filter6);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+			console.log(filter6);
+			setTrips(filter6);
+			setTravelArr(filter6);
+			console.log(filter6);
+		};
+
 	};
 
 	const handleChildren = (e) => {
-		//console.log(e.target.value);
-		//console.log(travelArr);
+		console.log(e.target.value);
+		console.log(ageArr);
+		console.log(genderArr);
+		console.log(activityArr);
+		console.log(childrenArr);
+		console.log(travelArr);
+		console.log(arr);
+
 		const value = e.target.value;
 		const filterFunction = (elem) => {
 
@@ -95,16 +169,63 @@ export const Single = () => {
 				console.log('no matches!')
 			}
 		};
-		const filter = travelArr.length > 0 ? travelArr.filter(filterFunction) : arr.filter(filterFunction);
-		//console.log(filter);
-		setTrips(filter);
-		setChildrenArr(filter);
-		//console.log(childrenArr);
+		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+		const filter1 = ageArr.filter(filterFunction);
+		const filter2 = genderArr.filter(filterFunction);
+		const filter3 = activityArr.filter(filterFunction);
+		const filter4 = childrenArr.filter(filterFunction);
+		const filter5 = travelArr.filter(filterFunction);
+		const filter6 = arr.filter(filterFunction);
+
+		if (ageArr.length > 0) {
+			setTrips(filter1);
+			setChildrenArr(filter1);
+			console.log(filter1);
+		}
+		if (ageArr.length == 0 && genderArr.length > 0) {
+			console.log(filter2);
+			setTrips(filter2);
+			setChildrenArr(filter2);
+			console.log(filter2);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+			console.log(filter3);
+			setTrips(filter3);
+			setChildrenArr(filter3);
+			console.log(filter3);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+			console.log(filter6);
+			setTrips(filter6);
+			setChildrenArr(filter6);
+			console.log(filter6);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+			console.log(filter5);
+			setTrips(filter5);
+			setChildrenArr(filter5);
+			console.log(filter5);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+			console.log(filter6);
+			setTrips(filter6);
+			setChildrenArr(filter6);
+			console.log(filter6);
+		};
+
 	};
 
 	const handleActivity = (e) => {
 		console.log(e.target.value);
+		console.log(ageArr);
+		console.log(genderArr);
+		console.log(activityArr);
 		console.log(childrenArr);
+		console.log(travelArr);
+		console.log(arr);
+
 		const value = e.target.value;
 		const filterFunction = (elem) => {
 
@@ -116,193 +237,245 @@ export const Single = () => {
 			}
 		};
 		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
-		const filter1 = childrenArr.filter(filterFunction);
-		const filter2 = travelArr.filter(filterFunction);
-		const filter3 = arr.filter(filterFunction);
+		const filter1 = ageArr.filter(filterFunction);
+		const filter2 = genderArr.filter(filterFunction);
+		const filter3 = activityArr.filter(filterFunction);
+		const filter4 = childrenArr.filter(filterFunction);
+		const filter5 = travelArr.filter(filterFunction);
+		const filter6 = arr.filter(filterFunction);
 
-		if (childrenArr.length > 0) {
-			console.log(filter1);
+		if (ageArr.length > 0) {
 			setTrips(filter1);
 			setActivityArr(filter1);
 			console.log(filter1);
-			;
 		}
-		else if (childrenArr.length == 0 && travelArr.length == 0) {
-			console.log(filter3);
-			setTrips(filter3);
-			setActivityArr(filter3);
-			console.log(filter3);
-		}
-		else if (childrenArr.length == 0) {
+		if (ageArr.length == 0 && genderArr.length > 0) {
 			console.log(filter2);
 			setTrips(filter2);
 			setActivityArr(filter2);
 			console.log(filter2);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+			console.log(filter6);
+			setTrips(filter6);
+			setActivityArr(filter6);
+			console.log(filter6);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+			console.log(filter4);
+			setTrips(filter4);
+			setActivityArr(filter4);
+			console.log(filter4);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+			console.log(filter5);
+			setTrips(filter5);
+			setActivityArr(filter5);
+			console.log(filter5);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+			console.log(filter6);
+			setTrips(filter6);
+			setActivityArr(filter6);
+			console.log(filter6);
+		};
+
+	};
+
+	const handleGender  = (e) => {
+		console.log(e.target.value);
+		console.log(ageArr);
+		console.log(genderArr);
+		console.log(activityArr);
+		console.log(childrenArr);
+		console.log(travelArr);
+		console.log(arr);
+
+		const value = e.target.value;
+		const filterFunction = (elem) => {
+
+			if (elem.gender == value) {
+				return elem;
+			}
+			else {
+				console.log('no matches!')
+			}
+		};
+		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+		const filter1 = ageArr.filter(filterFunction);
+		const filter2 = genderArr.filter(filterFunction);
+		const filter3 = activityArr.filter(filterFunction);
+		const filter4 = childrenArr.filter(filterFunction);
+		const filter5 = travelArr.filter(filterFunction);
+		const filter6 = arr.filter(filterFunction);
+
+		if (ageArr.length > 0) {
+			setTrips(filter1);
+			setGenderArr(filter1);
+			console.log(filter1);
+		}
+		if (ageArr.length == 0 && genderArr.length > 0) {
+			console.log(filter6);
+			setTrips(filter6);
+			setGenderArr(filter6);
+			console.log(filter6);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+			console.log(filter3);
+			setTrips(filter3);
+			setGenderArr(filter3);
+			console.log(filter3);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+			console.log(filter4);
+			setTrips(filter4);
+			setGenderArr(filter4);
+			console.log(filter4);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+			console.log(filter5);
+			setTrips(filter5);
+			setGenderArr(filter5);
+			console.log(filter5);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+			console.log(filter6);
+			setTrips(filter6);
+			setGenderArr(filter6);
+			console.log(filter6);
+		};
+
+};
+
+	const handleAge  = (e) => {
+		console.log(e.target.value);
+		console.log(ageArr);
+		console.log(genderArr);
+		console.log(activityArr);
+		console.log(childrenArr);
+		console.log(travelArr);
+		console.log(arr);
+
+		const value = e.target.value;
+		const filterFunction = (elem) => {
+
+			if (elem.age == value) {
+				return elem;
+			}
+			else {
+				console.log('no matches!')
+			}
+		};
+		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+		const filter1 = ageArr.filter(filterFunction);
+		const filter2 = genderArr.filter(filterFunction);
+		const filter3 = activityArr.filter(filterFunction);
+		const filter4 = childrenArr.filter(filterFunction);
+		const filter5 = travelArr.filter(filterFunction);
+		const filter6 = arr.filter(filterFunction);
+
+		if (ageArr.length > 0) {
+			setTrips(filter6);
+			setAgeArr(filter6);
+			console.log(filter6);
+		}
+		if (ageArr.length == 0 && genderArr.length > 0) {
+			console.log(filter2);
+			setTrips(filter2);
+			setAgeArr(filter2);
+			console.log(filter2);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+			console.log(filter3);
+			setTrips(filter3);
+			setAgeArr(filter3);
+			console.log(filter3);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+			console.log(filter4);
+			setTrips(filter4);
+			setAgeArr(filter4);
+			console.log(filter4);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+			console.log(filter5);
+			setTrips(filter5);
+			setAgeArr(filter5);
+			console.log(filter5);
+		}
+
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+			console.log(filter6);
+			setTrips(filter6);
+			setAgeArr(filter6);
+			console.log(filter6);
 		};
 	}
 
-		const handleGender = (e) => {
-			console.log(e.target.value);
-			console.log(activityArr);
-			const value = e.target.value;
-			const filterFunction = (elem) => {
+	const handleStay = (e) => {
+		console.log(e.target.value);
+		console.log(ageArr);
+		const value = e.target.value;
+		const filterFunction = (elem) => {
 
-				if (elem.gender == value) {
-					return elem;
-				}
-				else {
-					console.log('no matches!')
-				}
-			};
-			//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
-			const filter1 = activityArr.filter(filterFunction);
-			const filter2 = childrenArr.filter(filterFunction);
-			const filter3 = travelArr.filter(filterFunction);
-			const filter4 = arr.filter(filterFunction);
-
-			if (activityArr.length > 0) {
-				console.log(filter1);
-				setTrips(filter1);
-				setGenderArr(filter1);
-				console.log(filter1);
+			if (elem.stay == value) {
+				return elem;
 			}
-			else if (activityArr.length == 0 && childrenArr.length > 0) {
-				console.log(filter2);
-				setTrips(filter2);
-				setGenderArr(filter2);
-				console.log(filter2);
+			else {
+				console.log('no matches!')
 			}
+		};
+		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+		const filter1 = ageArr.filter(filterFunction);
+		const filter2 = genderArr.filter(filterFunction);
+		const filter3 = activityArr.filter(filterFunction);
+		const filter4 = childrenArr.filter(filterFunction);
+		const filter5 = travelArr.filter(filterFunction);
+		const filter6 = arr.filter(filterFunction);
 
-			else if (activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
-				console.log(filter3);
-				setTrips(filter3);
-				setGenderArr(filter3);
-				console.log(filter3);
-			}
+		if (ageArr.length > 0) {
+			console.log(filter1);
+			setTrips(filter1);
+			setStayArr(filter1);
+			console.log(filter1);
+		}
+		if (ageArr.length == 0 && genderArr.length > 0) {
+			console.log(filter2);
+			setTrips(filter2);
+			setStayArr(filter2);
+			console.log(filter2);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+			console.log(filter3);
+			setTrips(filter3);
+			setStayArr(filter3);
+			console.log(filter3);
+		}
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+			console.log(filter4);
+			setTrips(filter4);
+			setStayArr(filter4);
+			console.log(filter4);
+		}
 
-			else if (activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
-				console.log(filter4);
-				setTrips(filter4);
-				setGenderArr(filter4);
-				console.log(filter4);
-			};
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+			console.log(filter5);
+			setTrips(filter5);
+			setStayArr(filter5);
+			console.log(filter5);
+		}
 
-	};
-
-		const handleAge = (e) => {
-			console.log(e.target.value);
-			console.log(genderArr);
-			const value = e.target.value;
-			const filterFunction = (elem) => {
-
-				if (elem.age == value) {
-					return elem;
-				}
-				else {
-					console.log('no matches!')
-				}
-			};
-			//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
-			const filter1 = genderArr.filter(filterFunction);
-			const filter2 = activityArr.filter(filterFunction);
-			const filter3 = childrenArr.filter(filterFunction);
-			const filter4 = travelArr.filter(filterFunction);
-			const filter5 = arr.filter(filterFunction);
-
-			if (genderArr.length > 0) {
-				console.log(filter1);
-				setTrips(filter1);
-				setAgeArr(filter1);
-				console.log(filter1);
-			}
-			else if (genderArr.length == 0 && activityArr.length > 0) {
-				console.log(filter2);
-				setTrips(filter2);
-				setAgeArr(filter2);
-				console.log(filter2);
-			}
-			else if (genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
-				console.log(filter3);
-				setTrips(filter3);
-				setAgeArr(filter3);
-				console.log(filter3);
-			}
-
-			else if (genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
-				console.log(filter4);
-				setTrips(filter4);
-				setAgeArr(filter4);
-				console.log(filter4);
-			}
-
-			else if (genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
-				console.log(filter5);
-				setTrips(filter5);
-				setAgeArr(filter5);
-				console.log(filter5);
-			};
-
-	};
-
-		const handleStay = (e) => {
-			console.log(e.target.value);
-			console.log(ageArr);
-			const value = e.target.value;
-			const filterFunction = (elem) => {
-
-				if (elem.stay == value) {
-					return elem;
-				}
-				else {
-					console.log('no matches!')
-				}
-			};
-			//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
-			const filter1 = ageArr.filter(filterFunction);
-			const filter2 = genderArr.filter(filterFunction);
-			const filter3 = activityArr.filter(filterFunction);
-			const filter4 = childrenArr.filter(filterFunction);
-			const filter5 = travelArr.filter(filterFunction);
-			const filter6 = arr.filter(filterFunction);
-
-			if (ageArr.length > 0) {
-				console.log(filter1);
-				setTrips(filter1);
-				setStayArr(filter1);
-				console.log(filter1);
-			}
-			if (ageArr.length == 0 && genderArr.length > 0) {
-				console.log(filter2);
-				setTrips(filter2);
-				setStayArr(filter2);
-				console.log(filter2);
-			}
-			else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
-				console.log(filter3);
-				setTrips(filter3);
-				setStayArr(filter3);
-				console.log(filter3);
-			}
-			else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
-				console.log(filter4);
-				setTrips(filter4);
-				setStayArr(filter4);
-				console.log(filter4);
-			}
-
-			else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
-				console.log(filter5);
-				setTrips(filter5);
-				setStayArr(filter5);
-				console.log(filter5);
-			}
-
-			else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
-				console.log(filter6);
-				setTrips(filter6);
-				setStayArr(filter6);
-				console.log(filter6);
-			};
+		else if (ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+			console.log(filter6);
+			setTrips(filter6);
+			setStayArr(filter6);
+			console.log(filter6);
+		};
 
 	};
 
@@ -408,7 +581,7 @@ export const Single = () => {
 					)
 				}
 			</div>
-			<div className="offcanvas offcanvas-end" data-bs-scroll="false" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+			<div className="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
 				<div className="offcanvas-header">
 					<h5 className="offcanvas-title" id="offcanvasScrollingLabel">Preferences</h5>
 					<button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
