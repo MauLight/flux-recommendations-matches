@@ -3,12 +3,12 @@
 */
 
 body {
-    background-color: #e7f9ff;;
+    background-color: #e7f9ff;
 }
 
-* {
-    box-sizing: content-box !important;
-  }
+  * {
+      box-sizing: content-box !important;
+    }
   
   .row {
     display: -webkit-box;
@@ -43,4 +43,5 @@ body {
 .btn:hover {
     background-color:#336b87;
     color: #e7f9ff;
-}  
+} 
+

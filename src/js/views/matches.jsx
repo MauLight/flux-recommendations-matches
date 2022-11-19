@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { arr } from "../component/array";
+//import { arr } from "../component/array";
 
 const style = {
 	width: '80px',
@@ -27,18 +27,58 @@ const OffCanvasBtn = () => {
 	)
 }
 
-export const Single = () => {
+const Matches = () => {
+
+    const getAllUsersWithTripsAsync = async () => {
+        let url = `${process.env.BACKEND_URL}//users/mytrips`;
+        let options_get = {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            }
+        }
+        try {
+            const response = await fetch(url,options_get);
+            const data = await response.json();
+            console.log(data);
+            console.log(data.createtrips);
+            setAllUsers(data);
+            setTrips(data.createtrips);
+        }
+        catch(error) {
+            console.log(error);
+        }
+    };
+
+    const getUserWithTripsAsync = async () => {
+        let url = `${process.env.BACKEND_URL}/users/${user_id}/mytrips`;
+        let options_get = {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            }
+        }
+        try {
+            const response = await fetch(url,options_get);
+            const data = await response.json();
+            console.log(data);
+            console.log(data.createtrips);
+            setuser_trip(data.createtrips);
+            setUser(data);
+        }
+        catch(error) {
+            console.log(error);
+        }
+    };
 
 	//STATE VARIABLES
 	//Fetch user_trip and allusers_trips
-	const [trips, setTrips] = useState(arr);
-	const [user_trip, setuser_trip] = useState({
-		user: "Bud",
-		country: "Chile",
-		city: "Santiago",
-		start_date: "1/1/1",
-		end_date: "2/2/2"
-	});
+	const [allUsers, setAllUsers] = useState([]);
+	const [trips, setTrips] = useState([]);
+	const [user_trip, setuser_trip] = useState([]);
+	const [user, setUser] = useState([]);
+    const { store, actions } = useContext(Context);
+    const user_id = store.currentUser?.user?.id;
 
 	//Individual variables state.
 	//const [traveling, setTraveling] = useState(0);
@@ -680,6 +720,14 @@ export const Single = () => {
 			console.log(e.target.value);
 		}
 	*/
+
+    useEffect(() => {
+        getAllUsersWithTripsAsync()
+    }, []);
+    useEffect(() => {
+        getUserWithTripsAsync()
+    }, []);
+
 	return (
 		<div className="container">
 			<div className="mb-5">
@@ -691,21 +739,30 @@ export const Single = () => {
 				{
 					!!trips && trips.length > 0 ? (
 						trips.map((trip, i) => {
-							const filter_val = 1;
-							if (trip.country === user_trip.country && trip.city === user_trip.city && trip.start_date === user_trip.start_date) {
+							if (trip.country === user_trip.country_trip && trip.city === user_trip.capital_trip && trip.start_date === user_trip.start_date) {
 								return (
 									<div className='col-3 justify-content-center p-3' key={i}>
 										<div className="trip_card card border-0 mb-5 justify-content-center">
 											<a className="mx-auto" href="https://rr.noordstar.me/test-109ddae8">
-												<img src={trip.user_img} className="card-img-top pt-3 mx-auto" alt="..." style={rounded} />
+												<img src='' className="card-img-top pt-3 mx-auto" alt="..." style={rounded} />
 											</a>
 											<div className="card-body d-flex p-0">
 
 												<div className='w-100 text-center p-3'>
-													<p className="trip_text card-text px-2">{trip.user} goes to {trip.city}, {trip.country} on the same date!</p>
+													{
+                                                        !!allUsers && allUsers.length > 0 ? (
+                                                            allUsers.map((user, i) => {
+                                                                if(user.id === trip.users_id) {
+                                                                    return (
+                                                                        <p key={i} className="trip_text card-text px-2">{user.firstname} {user.lastname}</p>
+                                                                    )
+                                                                }
+                                                            })
+                                                        ) : <p className="trip_text card-text px-2">We don't have a name!</p>
+                                                    } <p> goes to {trip.capital_trip}, {trip.country_trip} on the same date!</p>
 												</div>
 											</div>
-											<button className="btn w-25 mx-auto mb-3" onClick={handleMatch}>Add Match!</button>
+                                            <button className="btn w-25 mx-auto mb-3" onClick={handleMatch}>Add Match!</button>
 										</div>
 									</div>
 								)
@@ -897,3 +954,5 @@ export const Single = () => {
 		</div>
 	);
 };
+
+export default Matches;
