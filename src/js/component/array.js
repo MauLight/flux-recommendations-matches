@@ -12,7 +12,8 @@ export const arr = [
         gender: 3,
         age: 8,
         stay: 1,
-        budget: 5000
+        budget: 5000,
+        id: 1
     },
     {
         user: "Mary",
@@ -27,7 +28,8 @@ export const arr = [
         gender: 1,
         age: 2,
         stay: 4,
-        budget: 4000
+        budget: 4000,
+        id: 2
     },
     {
         user: "Todd",
@@ -42,7 +44,8 @@ export const arr = [
         gender: 2,
         age: 3,
         stay: 2,
-        budget: 7000
+        budget: 7000,
+        id: 3
     },
     {
         user: "Lori",
@@ -57,7 +60,8 @@ export const arr = [
         gender: 1,
         age: 6,
         stay: 1,
-        budget: 3000
+        budget: 3000,
+        id: 4
     },
     {
         user: "Pete",
@@ -72,7 +76,8 @@ export const arr = [
         gender: 3,
         age: 4,
         stay: 2,
-        budget: 5000
+        budget: 5000,
+        id: 5
     },
 
     {
@@ -88,7 +93,8 @@ export const arr = [
         gender: 2,
         age:7,
         stay: 4,
-        budget: 3000
+        budget: 3000,
+        id: 6
     },
 
     {
@@ -104,7 +110,8 @@ export const arr = [
         gender: 1,
         age: 5,
         stay: 3,
-        budget: 7000
+        budget: 7000,
+        id: 7
     },
     {
         user: "Milly",
@@ -119,7 +126,8 @@ export const arr = [
         gender: 3,
         age: 1,
         stay: 2,
-        budget: 2000
+        budget: 2000,
+        id: 8
     },
     {
         user: "Kile",
@@ -134,7 +142,8 @@ export const arr = [
         gender: 2,
         age: 2,
         stay: 3,
-        budget: 5000
+        budget: 5000,
+        id: 9
     },
 
     {   

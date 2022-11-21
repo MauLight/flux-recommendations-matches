@@ -619,16 +619,28 @@ export const Single = () => {
 
 	};
 
+	const btnColorChange = (e) => {
+		console.log(e.target)
+	}
 
-	const handleMatch = () => {
+	const savedMatches= [];
+
+	const handleMatch = (id) => {
 		//e.preventDefault();
-		//console.log(e.target.value);
-		console.log('hey!');
+
+		const filterMatch = trips.filter( elem => elem.id === id);
+		const match = filterMatch[0];
+		savedMatches.push(match);
+		console.log(savedMatches);
 	};
 
+	const showSelected = () => {
+		setTrips(savedMatches);
+	};
 
-
-
+	const saveMatches = () => {
+		console.log('saved!')
+	}
 
 
 	/*
@@ -705,7 +717,7 @@ export const Single = () => {
 													<p className="trip_text card-text px-2">{trip.user} goes to {trip.city}, {trip.country} on the same date!</p>
 												</div>
 											</div>
-											<button className="btn w-25 mx-auto mb-3" onClick={handleMatch}>Add Match!</button>
+											<button className="btn w-25 mx-auto mb-3" onClick={() => handleMatch(trip.id)}>Add Match!</button>
 										</div>
 									</div>
 								)
@@ -890,6 +902,8 @@ export const Single = () => {
 					</form>
 					<div className="col my-3">
 						<button className="btn" onClick={() => setTrips(arr)}>Reset</button>
+						<button className="btn" onClick={showSelected}>Show Matches</button>
+						<button className="btn" onClick={saveMatches}>Save Matches</button>
 					</div>
 
 				</div>
