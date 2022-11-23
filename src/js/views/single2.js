@@ -4,10 +4,7 @@ import { Context } from "../store/appContext";
 import { arr } from "../component/array";
 import { userTrips } from "../component/user";
 
-console.log(arr);
-console.log(arr[0]);
-const element = arr[0];
-console.log(element.createtrip);
+//CSS STYLES
 
 const style = {
 	width: '80px',
@@ -25,22 +22,125 @@ const rounded = {
 	objectPosition: 'top'
 }
 
+const rounded2 = {
+	borderRadius: '100%',
+	objectFit: 'cover',
+	width: '100px',
+	height: 'auto',
+	objectPosition: 'top'
+}
+
 const OffCanvasBtn = () => {
 	return (
-		<button className="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+		<button className="btn btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
 			Preferences
 		</button>
 	)
 }
 
-export const Single = () => {
+const Matches = () => {
 
-	//STATE VARIABLES
+	//FETCH FUNCTIONS
+
+	const getAllUsersWithTripsAsync = async () => {
+        let url = `${process.env.BACKEND_URL}//users/mytrips`;
+        let options_get = {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            }
+        }
+        try {
+            const response = await fetch(url, options_get);
+            const data = await response.json();
+            console.log(data);
+            console.log(data.createtrips);
+            setAllUsers(data);
+            setTrips(data.createtrips);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getUserWithTripsAsync = async () => {
+        let url = `${process.env.BACKEND_URL}/users/${user_id}/mytrips`;
+        let options_get = {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            }
+        }
+        try {
+            const response = await fetch(url, options_get);
+            const data = await response.json();
+            console.log(data);
+            console.log(data.createtrips);
+            setuser_trip(data.createtrips);
+            setUser(data);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+
+    const postMatch = async (match) => {
+
+        try {
+            //console.log("attempt to fetch")
+
+            const response = await fetch(`${process.env.BACKEND_URL}/users/${id}/rating`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify(match)
+
+            });
+            const data = await response.json()
+            window.location = '/save'
+            console.log(data);
+            console.log('data posted!');
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    };
+
+	//GENERAL STATE VARIABLES
 	//Fetch user_trip and allusers_trips
-	const [trips, setTrips] = useState(arr);
-	const [user_trip, setuser_trip] = useState(userTrips);
+	const [trips, setTrips] = useState([]);
+	const [user_trip, setuser_trip] = useState([]);
+	const [chosen_trip, setChosenTrip] = useState('');
+	const [matchData, setMatchData] = useState({});
+    const { store, actions } = useContext(Context);
+    const user_id = store.currentUser?.user?.id;
 
-	//Individual variables state.
+	//GET ONLY TRIPS ARRAY FROM CURRENT USER AND ALL USERS
+
+	const onlyAllTrips = trips.map((elem, i) => {
+		return elem.createtrips[0];
+	});
+	const onlyUserTrips = user_trip.createtrips.map((elem, i) => {
+		return elem;
+	});
+
+	const userFilter = (elem) => {
+		if (elem.country_trip === chosen_trip.country_trip && elem.capital_trip === chosen_trip.capital_trip && elem.start_date === chosen_trip.start_date) {
+			return elem;
+		}
+	};
+
+	//MATCHEDUSERS LOADS USERS IN THE SAME TRIP THAN CURRENT USER
+
+	const matchedUsers = onlyAllTrips.filter(userFilter);
+	console.log(matchedUsers);
+	//const userAllActivity = activities.filter(userFilter);
+
+	//INDIVIDUAL VARIABLE STATE
+
 	//const [traveling, setTraveling] = useState(0);
 	//const [children, setChildren] = useState(0);
 	const [budget, setBudget] = useState('');
@@ -49,7 +149,8 @@ export const Single = () => {
 	//const [age, setAge] = useState(1);
 	//const [stay, setStay] = useState(1);
 
-	//Individual filter state.
+	//INDIVIDUAL FILTER ARRAYS
+
 	const [travelArr, setTravelArr] = useState([]);
 	const [childrenArr, setChildrenArr] = useState([]);
 	const [activityArr, setActivityArr] = useState([]);
@@ -58,27 +159,7 @@ export const Single = () => {
 	const [stayArr, setStayArr] = useState([]);
 	const [budgetArr, setBudgetArr] = useState([]);
 
-	//Filter Functions.
-	/*
-		const handleTravel = (e) => {
-			//console.log(e.target.value);
-			const value = e.target.value;
-			const filterFunction = (elem) => {
-	
-				if (elem.traveling == value) {
-					return elem;
-				}
-				else {
-					console.log('no matches!')
-				}
-			};
-			const filter = arr.filter(filterFunction);
-			//console.log(filter);
-			setTrips(filter);
-			setTravelArr(filter);
-			//console.log(travelArr);
-		};
-		*/
+	//FILTER FUNCTIONS
 
 	const handleTravel = (e) => {
 		console.log(e.target.value);
@@ -94,7 +175,7 @@ export const Single = () => {
 			}
 		};
 		const filterFunction2 = (elem) => {
-			const usertrip = elem.createtrip[0]
+			const usertrip = elem.createtrips[0]
 			console.log(usertrip);
 			if (usertrip.traveling == value) {
 				return elem;
@@ -103,7 +184,7 @@ export const Single = () => {
 				console.log('no matches!')
 			}
 		};
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -114,60 +195,12 @@ export const Single = () => {
 		const filter8 = arr.filter(filterFunction2);
 
 
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+		if (travelArr.length === 0 || travelArr.length > 0) {
 			console.log(filter8);
 			setTrips(filter8);
 			setTravelArr(filter8);
 			console.log(filter8);
 		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
-			console.log(filter8);
-			setTrips(filter8);
-			setTravelArr(filter8);
-			console.log(filter8);
-		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0 && travelArr.length > 0) {
-			console.log(filter4);
-			setTrips(filter4);
-			setTravelArr(filter4);
-			console.log(filter4);
-		}
-
-		else if (stayArr.length > 0) {
-			console.log(filter6);
-			setTrips(filter6);
-			setTravelArr(filter6);
-			console.log(filter6);
-		}
-		else if (stayArr.length == 0 && budgetArr.length > 0) {
-			console.log(filter7);
-			setTrips(filter7);
-			setTravelArr(filter7);
-			console.log(filter7);
-		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length > 0) {
-			console.log(filter1);
-			setTrips(filter1);
-			setTravelArr(filter1);
-			console.log(filter1);
-		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length > 0) {
-			console.log(filter2);
-			setTrips(filter2);
-			setTravelArr(filter2);
-			console.log(filter2);
-		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
-			console.log(filter3);
-			setTrips(filter3);
-			setTravelArr(filter3);
-			console.log(filter3);
-		}
-
-
-
 
 	};
 
@@ -186,7 +219,7 @@ export const Single = () => {
 		};
 
 		const filterFunction2 = (elem) => {
-			const usertrip = elem.createtrip[0]
+			const usertrip = elem.createtrips[0]
 			console.log(usertrip);
 			if (usertrip.children == value) {
 				return elem;
@@ -196,7 +229,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -207,56 +239,74 @@ export const Single = () => {
 		const filter8 = arr.filter(filterFunction2);
 
 
-		if (stayArr.length > 0) {
-			console.log(filter6);
-			setTrips(filter6);
-			setChildrenArr(filter6);
-			console.log(filter6);
-		}
-		else if (stayArr.length == 0 && budgetArr.length > 0) {
-			console.log(filter7);
-			setTrips(filter7);
-			setChildrenArr(filter7);
-			console.log(filter7);
-		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length > 0) {
-			console.log(filter1);
-			setTrips(filter1);
-			setChildrenArr(filter1);
-			console.log(filter1);
-		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length > 0) {
-			console.log(filter2);
-			setTrips(filter2);
-			setChildrenArr(filter2);
-			console.log(filter2);
-		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
-			console.log(filter3);
-			setTrips(filter3);
-			setChildrenArr(filter3);
-			console.log(filter3);
-		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+
+		if (travelArr.length === 0) {
 			console.log(filter8);
 			setTrips(filter8);
 			setChildrenArr(filter8);
 			console.log(filter8);
 		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+		else if (travelArr.length > 0) {
 			console.log(filter5);
 			setTrips(filter5);
 			setChildrenArr(filter5);
 			console.log(filter5);
 		}
 
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
+	};
+
+	const handleBudget = (e) => {
+		console.log(e.target.value);
+		setBudget(e.target.value);
+		const value = e.target.value;
+
+		const filterFunction = (elem) => {
+			if (Math.abs(elem.budget - value) <= 1000) {
+				return elem;
+			}
+			else {
+				console.log('no matches!')
+			}
+		};
+
+		const filterFunction2 = (elem) => {
+			const usertrip = elem.createtrips[0]
+			console.log(usertrip);
+			if (Math.abs(usertrip.budget - value) <= 1000) {
+				return elem;
+			}
+			else {
+				console.log('no matches!')
+			}
+		};
+
+		const filter1 = ageArr.filter(filterFunction2);
+		const filter2 = genderArr.filter(filterFunction2);
+		const filter3 = activityArr.filter(filterFunction2);
+		const filter4 = childrenArr.filter(filterFunction2);
+		const filter5 = travelArr.filter(filterFunction2);
+		const filter6 = stayArr.filter(filterFunction2);
+		const filter7 = budgetArr.filter(filterFunction2);
+		const filter8 = arr.filter(filterFunction2);
+
+		if (travelArr.length === 0 && childrenArr.length === 0) {
 			console.log(filter8);
 			setTrips(filter8);
-			setChildrenArr(filter8);
+			setBudgetArr(filter8);
 			console.log(filter8);
-		};
+		}
+		else if (childrenArr.length > 0) {
+			console.log(filter4);
+			setTrips(filter4);
+			setBudgetArr(filter4);
+			console.log(filter4);
+		}
+		else if (travelArr.length > 0) {
+			console.log(filter5);
+			setTrips(filter5);
+			setBudgetArr(filter5);
+			console.log(filter5);
+		}
 
 	};
 
@@ -275,8 +325,8 @@ export const Single = () => {
 		};
 
 		const filterFunction2 = (elem) => {
-			const usertrip = elem.createtrip[0]
-			console.log(usertrip);
+			const usertrip = elem.createtrips[0]
+			console.log(usertrip.activity);
 			if (usertrip.activity == value) {
 				return elem;
 			}
@@ -285,7 +335,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -296,56 +345,30 @@ export const Single = () => {
 		const filter8 = arr.filter(filterFunction2);
 
 
-		if (stayArr.length > 0) {
-			console.log(filter6);
-			setTrips(filter6);
-			setActivityArr(filter6);
-			console.log(filter6);
+		if (travelArr.length === 0 && childrenArr.length === 0 && budgetArr.length === 0) {
+			console.log(filter8);
+			setTrips(filter8);
+			setActivityArr(filter8);
+			console.log(filter8);
 		}
-		else if (stayArr.length == 0 && budgetArr.length > 0) {
+		else if (budgetArr.length > 0) {
 			console.log(filter7);
 			setTrips(filter7);
 			setActivityArr(filter7);
 			console.log(filter7);
 		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length > 0) {
-			console.log(filter1);
-			setTrips(filter1);
-			setActivityArr(filter1);
-			console.log(filter1);
-		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length > 0) {
-			console.log(filter2);
-			setTrips(filter2);
-			setActivityArr(filter2);
-			console.log(filter2);
-		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
-			console.log(filter8);
-			setTrips(filter8);
-			setActivityArr(filter8);
-			console.log(filter8);
-		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+		else if (childrenArr.length > 0) {
 			console.log(filter4);
 			setTrips(filter4);
 			setActivityArr(filter4);
 			console.log(filter4);
 		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+		else if (travelArr.length > 0) {
 			console.log(filter5);
 			setTrips(filter5);
 			setActivityArr(filter5);
 			console.log(filter5);
 		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
-			console.log(filter8);
-			setTrips(filter8);
-			setActivityArr(filter8);
-			console.log(filter8);
-		};
 
 	};
 
@@ -366,7 +389,7 @@ export const Single = () => {
 		};
 
 		const filterFunction2 = (elem) => {
-			const usertrip = elem.createtrip[0]
+			const usertrip = elem.createtrips[0]
 			console.log(usertrip);
 			if (usertrip.gender == value) {
 				return elem;
@@ -376,7 +399,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -387,56 +409,36 @@ export const Single = () => {
 		const filter8 = arr.filter(filterFunction2);
 
 
-		if (stayArr.length > 0) {
-			console.log(filter6);
-			setTrips(filter6);
-			setGenderArr(filter6);
-			console.log(filter6);
-		}
-		else if (stayArr.length == 0 && budgetArr.length > 0) {
-			console.log(filter7);
-			setTrips(filter7);
-			setGenderArr(filter7);
-			console.log(filter7);
-		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length > 0) {
-			console.log(filter1);
-			setTrips(filter1);
-			setGenderArr(filter1);
-			console.log(filter1);
-		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length > 0) {
+		if (travelArr.length === 0 && childrenArr.length === 0 && budgetArr.length === 0 && activityArr.length === 0) {
 			console.log(filter8);
 			setTrips(filter8);
 			setGenderArr(filter8);
 			console.log(filter8);
 		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+		else if (activityArr.length > 0) {
 			console.log(filter3);
 			setTrips(filter3);
 			setGenderArr(filter3);
 			console.log(filter3);
 		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+		else if (budgetArr.length > 0) {
+			console.log(filter7);
+			setTrips(filter7);
+			setGenderArr(filter7);
+			console.log(filter7);
+		}
+		else if (childrenArr.length > 0) {
 			console.log(filter4);
 			setTrips(filter4);
 			setGenderArr(filter4);
 			console.log(filter4);
 		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+		else if (travelArr.length > 0) {
 			console.log(filter5);
 			setTrips(filter5);
 			setGenderArr(filter5);
 			console.log(filter5);
 		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
-			console.log(filter8);
-			setTrips(filter8);
-			setGenderArr(filter8);
-			console.log(filter8);
-		};
 
 	};
 
@@ -455,7 +457,7 @@ export const Single = () => {
 		};
 
 		const filterFunction2 = (elem) => {
-			const usertrip = elem.createtrip[0]
+			const usertrip = elem.createtrips[0]
 			console.log(usertrip);
 			if (usertrip.age == value) {
 				return elem;
@@ -465,7 +467,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -476,56 +477,42 @@ export const Single = () => {
 		const filter8 = arr.filter(filterFunction2);
 
 
-		if (stayArr.length > 0) {
-			console.log(filter6);
-			setTrips(filter6);
-			setAgeArr(filter6);
-			console.log(filter6);
-		}
-		else if (stayArr.length == 0 && budgetArr.length > 0) {
-			console.log(filter7);
-			setTrips(filter7);
-			setAgeArr(filter7);
-			console.log(filter7);
-		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length > 0) {
+		if (travelArr.length === 0 && childrenArr.length === 0 && budgetArr.length === 0 && activityArr.length === 0 && genderArr.length == 0) {
 			console.log(filter8);
 			setTrips(filter8);
 			setAgeArr(filter8);
 			console.log(filter8);
 		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length > 0) {
+		else if (genderArr.length > 0) {
 			console.log(filter2);
 			setTrips(filter2);
 			setAgeArr(filter2);
 			console.log(filter2);
 		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+		else if (activityArr.length > 0) {
 			console.log(filter3);
 			setTrips(filter3);
 			setAgeArr(filter3);
 			console.log(filter3);
 		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+		else if (budgetArr.length > 0) {
+			console.log(filter7);
+			setTrips(filter7);
+			setAgeArr(filter7);
+			console.log(filter7);
+		}
+		else if (childrenArr.length > 0) {
 			console.log(filter4);
 			setTrips(filter4);
 			setAgeArr(filter4);
 			console.log(filter4);
 		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+		else if (travelArr.length > 0) {
 			console.log(filter5);
 			setTrips(filter5);
 			setAgeArr(filter5);
 			console.log(filter5);
 		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
-			console.log(filter8);
-			setTrips(filter8);
-			setAgeArr(filter8);
-			console.log(filter8);
-		};
 
 	};
 
@@ -544,7 +531,7 @@ export const Single = () => {
 		};
 
 		const filterFunction2 = (elem) => {
-			const usertrip = elem.createtrip[0]
+			const usertrip = elem.createtrips[0]
 			console.log(usertrip);
 			if (usertrip.stay == value) {
 				return elem;
@@ -554,7 +541,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -565,152 +551,59 @@ export const Single = () => {
 		const filter8 = arr.filter(filterFunction2);
 
 
-		if (stayArr.length > 0) {
+		if (travelArr.length === 0 && childrenArr.length === 0 && budgetArr.length === 0 && activityArr.length === 0 && genderArr.length == 0 && ageArr.length == 0) {
 			console.log(filter8);
 			setTrips(filter8);
 			setStayArr(filter8);
 			console.log(filter8);
 		}
-		else if (stayArr.length == 0 && budgetArr.length > 0) {
-			console.log(filter7);
-			setTrips(filter7);
-			setStayArr(filter7);
-			console.log(filter7);
-		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length > 0) {
+		else if (ageArr.length > 0) {
 			console.log(filter1);
 			setTrips(filter1);
 			setStayArr(filter1);
 			console.log(filter1);
 		}
-		if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length > 0) {
+		else if (genderArr.length > 0) {
 			console.log(filter2);
 			setTrips(filter2);
 			setStayArr(filter2);
 			console.log(filter2);
 		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
+		else if (activityArr.length > 0) {
 			console.log(filter3);
 			setTrips(filter3);
 			setStayArr(filter3);
 			console.log(filter3);
 		}
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
+		else if (budgetArr.length > 0) {
+			console.log(filter3);
+			setTrips(filter3);
+			setStayArr(filter3);
+			console.log(filter3);
+		}
+		else if (childrenArr.length > 0) {
 			console.log(filter4);
 			setTrips(filter4);
 			setStayArr(filter4);
 			console.log(filter4);
 		}
 
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
+		else if (travelArr.length > 0) {
 			console.log(filter5);
 			setTrips(filter5);
 			setStayArr(filter5);
 			console.log(filter5);
 		}
-
-		else if (stayArr.length == 0 && budgetArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
-			console.log(filter8);
-			setTrips(filter8);
-			setStayArr(filter8);
-			console.log(filter8);
-		};
-
 	};
 
-	const handleBudget = (e) => {
-		console.log(e.target.value);
-		setBudget(e.target.value);
-		const value = e.target.value;
-		
-		const filterFunction = (elem) => {
-			if (Math.abs(elem.budget - value) <= 1000) {
-				return elem;
-			}
-			else {
-				console.log('no matches!')
-			}
-		};
+	//ADD MATCH SAVE FEATURE
 
-		const filterFunction2 = (elem) => {
-			const usertrip = elem.createtrip[0]
-			console.log(usertrip);
-			if (Math.abs(usertrip.budget - value) <= 1000) {
-				return elem;
-			}
-			else {
-				console.log('no matches!')
-			}
-		};
-
-		const filter1 = ageArr.filter(filterFunction2);
-		const filter2 = genderArr.filter(filterFunction2);
-		const filter3 = activityArr.filter(filterFunction2);
-		const filter4 = childrenArr.filter(filterFunction2);
-		const filter5 = travelArr.filter(filterFunction2);
-		const filter6 = stayArr.filter(filterFunction2);
-		const filter7 = budgetArr.filter(filterFunction2);
-		const filter8 = arr.filter(filterFunction2);
-
-		if (budgetArr.length > 0) {
-			console.log(filter8);
-			setTrips(filter8);
-			setBudgetArr(filter8);
-			console.log(filter8);
-		}
-		else if (budgetArr.length == 0 && stayArr.length > 0) {
-			console.log(filter6);
-			setTrips(filter6);
-			setBudgetArr(filter6);
-			console.log(filter6);
-		}
-		else if (budgetArr.length == 0 && stayArr.length == 0 && ageArr.length > 0) {
-			console.log(filter1);
-			setTrips(filter1);
-			setBudgetArr(filter1);
-			console.log(filter1);
-		}
-		else if (budgetArr.length == 0 && stayArr.length == 0 && ageArr.length == 0 && genderArr.length > 0) {
-			console.log(filter2);
-			setTrips(filter2);
-			setBudgetArr(filter2);
-			console.log(filter2);
-		}
-		else if (budgetArr.length == 0 && stayArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length > 0) {
-			console.log(filter3);
-			setTrips(filter3);
-			setBudgetArr(filter3);
-			console.log(filter3);
-		}
-		else if (budgetArr.length == 0 && stayArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length > 0) {
-			console.log(filter4);
-			setTrips(filter4);
-			setBudgetArr(filter4);
-			console.log(filter4);
-		}
-
-		else if (budgetArr.length == 0 && stayArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length > 0) {
-			console.log(filter5);
-			setTrips(filter5);
-			setBudgetArr(filter5);
-			console.log(filter5);
-		}
-
-		else if (budgetArr.length == 0 && stayArr.length == 0 && ageArr.length == 0 && genderArr.length == 0 && activityArr.length == 0 && childrenArr.length == 0 && travelArr.length == 0) {
-			console.log(filter8);
-			setTrips(filter8);
-			setBudgetArr(filter8);
-			console.log(filter8);
-		};
-
-	};
-
-	const savedMatches= [];
+	const savedMatches = [];
 
 	const handleMatch = (id) => {
 		//e.preventDefault();
 
-		const filterMatch = trips.filter( elem => elem.id === id);
+		const filterMatch = trips.filter(elem => elem.id === id);
 		const match = filterMatch[0];
 		savedMatches.push(match);
 		console.log(savedMatches);
@@ -721,106 +614,136 @@ export const Single = () => {
 	};
 
 	const saveMatches = () => {
-		console.log('saved!')
-	}
 
+		//console.log(savedMatches);
+		//console.log('saved!');
+		const postMatches = savedMatches.map((elem, i) => {
+			return ({
+				users_id: user_id,
+				match_id: elem.id
+			});
+		});
 
-	/*
-		const handleClick = () => {
-			console.log(arr);
-			console.log(traveling);
-			const filter = arr.filter(elem => elem.traveling == traveling);
-			console.log(filter);
-		
-		}
-		
-		const handleBudget = (e) => {
-			setBudget(e.target.value)
-			console.log(e.target.value)
-		}
-		
-		const handleTravel = (e) => {
-		
-			const filterFunction = (elem) => {
-		
-				if (elem.traveling == filter_val) {
-					return elem;
-				}
-				else {
-					console.log('no matches!')
-				}
-			};
-			//e.preventDefault();
-			console.log(e.target.value);
-			const filter_val = e.target.value;
-			const filter = arr.filter(filterFunction);
-			setTrips(filter);
-			console.log(filter);
-			console.log(trips);
-		};
-		
-		const handleChildren = (e) => {
-			//e.preventDefault();
-			//setTrips([...trips]);
-			//console.log(e.target.value);
-			const filter_val = e.target.value;
-			//const filter = history.current.filter(elem => elem.children == filter_val);
-			setChildren(filter_val);
-			//console.log(filter);
-			console.log(children);
-		}
-		const handleChange = (e) => {
-			//e.preventDefault();
-			console.log(e.target.value);
-		}
-	*/
+		postMatches.forEach(function (match, i) {
+			console.log(match, i);
+			postMatch(match);
+		  })
+	};
+
+	//CHOOSE YOUR TRIP FEATURE
+
+	const handleTrip = (id) => {
+		console.log('hey!');
+		console.log(id);
+		const tripArr = user_trip.createtrips;
+		const chosenTripArr = tripArr.filter((elem) => elem.id === id);
+		setChosenTrip(chosenTripArr[0]);
+		console.log(chosenTripArr[0]);
+		console.log(chosen_trip);
+	};
+
+	//USEEFFECT
+
+	useEffect(() => {
+		getAllUsersWithTripsAsync()
+	}, []);
+
+	useEffect(() => {
+		getUserWithTripsAsync()
+	}, []);
+
+	useEffect(() => {
+		postMatch()
+	}, []);
+
 	return (
 		<div className="container">
-			<div className="mb-5">
+			<div className="mb-1">
 				<h1 className='matches_title mb-2'>Your Matches!</h1>
 				<OffCanvasBtn className='float-end' />
+			</div>
+			<div className="btn-group mb-1">
+				<button className="filters_btn btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					Select trip
+				</button>
+				<ul className="dropdown-menu">
+					{
+						!!onlyUserTrips && onlyUserTrips.length > 0 ? (
+							onlyUserTrips.map((elem, i) => {
+								return (
+									<li className='trip_list btn p-1 m-0 w-100 border-0 rounded-0 list-item' key={i} onClick={() => handleTrip(elem.id)} >
+										<small>{elem.capital_trip}, {elem.country_trip}</small>
+									</li>
+								)
+							})
+						) : (
+							<p>No trips added</p>
+						)
+					}
+				</ul>
 			</div>
 			<div className="row d-flex mx-auto justify-content-center">
 
 				{
-					!!trips && trips.length > 0 ? (
-						trips.map((trip, i) => {
-							const filter_val = 1;
-							if (trip.country === user_trip.country_trip && trip.city === user_trip.capital_trip && trip.start_date === user_trip.start_date) {
-								return (
-									<div className='col-3 justify-content-center p-3' key={i}>
-										<div className="trip_card card border-0 mb-5 justify-content-center">
-											<a className="mx-auto" href="https://rr.noordstar.me/test-109ddae8">
-												<img src={trip.user_img} className="card-img-top pt-3 mx-auto" alt="..." style={rounded} />
-											</a>
-											<div className="card-body d-flex p-0">
+					!!matchedUsers && matchedUsers.length > 0 ? (
+						matchedUsers.map((trip, i) => {
+							return (
+								<div className='col-3 justify-content-center p-3' key={i}>
+									<div className="trip_card card border-0 mb-5">
 
-												<div className='w-100 text-center p-3'>
-													<p className="trip_text card-text px-2">{trip.user} goes to {trip.city}, {trip.country} on the same date!</p>
-												</div>
-											</div>
-											<button className="btn w-25 mx-auto mb-3" onClick={() => handleMatch(trip.id)}>Add Match!</button>
-										</div>
+										{
+											!!trips && trips.length > 0 ? (
+												trips.map((user, i) => {
+													if (user.id === trip.users_id) {
+														return (
+															<div className="frame mx-auto justify-content-center" key={i}>
+																<a className="mx-auto" href="https://rr.noordstar.me/test-109ddae8">
+																	<img src={user.user_img} className="card-img-top pt-3 mx-auto" alt="..." style={rounded} />
+																</a>
+																<div className="card-body d-flex p-0">
+
+																	<div className='w-100 text-center p-3'>
+																		<p className="trip_text card-text px-2">{user.firstname} {user.lastname}</p>
+																		<p className="trip_text card-text px-2">{trip.firstname} goes to {trip.capital_trip}, {trip.country_trip} on the same date!</p>
+																	</div>
+																</div>
+															</div>
+														)
+													}
+												})
+											) : <p className="trip_text card-text px-2">We don't have a name!</p>
+										}
+										<button className="btn w-25 mx-auto mb-3" onClick={() => handleMatch(trip.id)}>Add Match!</button>
 									</div>
-								)
-							}
-
-							else {
-								return ""
-							}
+								</div>
+							)
 						}
 						)
-					) : (
-						<div className="col-md-12 text-center">
-							<h4>There are no matches for your trip.</h4>
-						</div>
 					)
+						: (
+							<div className="col-md-12 text-center">
+								<h4>There are no matches for your trip.</h4>
+							</div>
+						)
 				}
 			</div>
 			<div className="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
 				<div className="offcanvas-header">
 					<h5 className="offcanvas-title" id="offcanvasScrollingLabel">Preferences</h5>
 					<button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+				</div>
+				<div>
+					<div className="img-card card border-0 my-3 justify-content-center">
+
+						<img src={userTrips.user_img} className="p-0 mx-auto" alt="..." style={rounded2} />
+
+					</div>
+					<div className='description-card text-center'>
+						<a className="mx-auto" href="https://rr.noordstar.me/test-109ddae8">
+							<h3>{userTrips.firstname} {userTrips.lastname}</h3>
+						</a>
+						<p>From {userTrips.countryofresidence}</p>
+					</div>
 				</div>
 				<div className="offcanvas-body">
 					<form>
@@ -985,7 +908,7 @@ export const Single = () => {
 					<div className="col my-3">
 						<button className="btn" onClick={() => setTrips(arr)}>Reset</button>
 						<button className="btn" onClick={showSelected}>Show Matches</button>
-						<button className="btn" onClick={saveMatches}>Save Matches</button>
+						<button className="save-btn btn" onClick={saveMatches}>Save Matches</button>
 					</div>
 
 				</div>
@@ -993,3 +916,5 @@ export const Single = () => {
 		</div>
 	);
 };
+
+export default Matches;

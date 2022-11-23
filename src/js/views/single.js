@@ -4,6 +4,8 @@ import { Context } from "../store/appContext";
 import { arr } from "../component/array";
 import { userTrips } from "../component/user";
 
+//CSS STYLES
+
 const style = {
 	width: '80px',
 	height: '80px',
@@ -38,11 +40,14 @@ const OffCanvasBtn = () => {
 
 export const Single = () => {
 
-	//STATE VARIABLES
+	//GENERAL STATE VARIABLES
 	//Fetch user_trip and allusers_trips
 	const [trips, setTrips] = useState(arr);
 	const [user_trip, setuser_trip] = useState(userTrips);
 	const [chosen_trip, setChosenTrip] = useState('');
+	const [matchData, setMatchData] = useState({});
+
+	//GET ONLY TRIPS ARRAY FROM CURRENT USER AND ALL USERS
 
 	const onlyAllTrips = trips.map((elem, i) => {
 		return elem.createtrips[0];
@@ -51,21 +56,20 @@ export const Single = () => {
 		return elem;
 	});
 
-	console.log(onlyAllTrips);
-	console.log(onlyUserTrips);
-	console.log(user_trip.createtrips);
-
 	const userFilter = (elem) => {
 		if (elem.country_trip === chosen_trip.country_trip && elem.capital_trip === chosen_trip.capital_trip && elem.start_date === chosen_trip.start_date) {
 			return elem;
 		}
 	};
 
+	//MATCHEDUSERS LOADS USERS IN THE SAME TRIP THAN CURRENT USER
+
 	const matchedUsers = onlyAllTrips.filter(userFilter);
 	console.log(matchedUsers);
 	//const userAllActivity = activities.filter(userFilter);
 
-	//Individual variables state.
+	//INDIVIDUAL VARIABLE STATE
+
 	//const [traveling, setTraveling] = useState(0);
 	//const [children, setChildren] = useState(0);
 	const [budget, setBudget] = useState('');
@@ -74,7 +78,8 @@ export const Single = () => {
 	//const [age, setAge] = useState(1);
 	//const [stay, setStay] = useState(1);
 
-	//Individual filter state.
+	//INDIVIDUAL FILTER ARRAYS
+
 	const [travelArr, setTravelArr] = useState([]);
 	const [childrenArr, setChildrenArr] = useState([]);
 	const [activityArr, setActivityArr] = useState([]);
@@ -83,27 +88,7 @@ export const Single = () => {
 	const [stayArr, setStayArr] = useState([]);
 	const [budgetArr, setBudgetArr] = useState([]);
 
-	//Filter Functions.
-	/*
-		const handleTravel = (e) => {
-			//console.log(e.target.value);
-			const value = e.target.value;
-			const filterFunction = (elem) => {
-	
-				if (elem.traveling == value) {
-					return elem;
-				}
-				else {
-					console.log('no matches!')
-				}
-			};
-			const filter = arr.filter(filterFunction);
-			//console.log(filter);
-			setTrips(filter);
-			setTravelArr(filter);
-			//console.log(travelArr);
-		};
-		*/
+	//FILTER FUNCTIONS
 
 	const handleTravel = (e) => {
 		console.log(e.target.value);
@@ -128,7 +113,7 @@ export const Single = () => {
 				console.log('no matches!')
 			}
 		};
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
+
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -173,7 +158,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -280,7 +264,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -345,7 +328,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -414,7 +396,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -489,7 +470,6 @@ export const Single = () => {
 			}
 		};
 
-		//const filter = childrenArr ? childrenArr.filter(filterFunction) : arr.filter(filterFunction);
 		const filter1 = ageArr.filter(filterFunction2);
 		const filter2 = genderArr.filter(filterFunction2);
 		const filter3 = activityArr.filter(filterFunction2);
@@ -545,7 +525,7 @@ export const Single = () => {
 		}
 	};
 
-
+	//ADD MATCH SAVE FEATURE
 
 	const savedMatches = [];
 
@@ -563,8 +543,23 @@ export const Single = () => {
 	};
 
 	const saveMatches = () => {
-		console.log('saved!')
-	}
+
+		//console.log(savedMatches);
+		//console.log('saved!');
+		const postMatches = savedMatches.map((elem, i) => {
+			return ({
+				users_id: userTrips.id,
+				match_id: elem.id
+			});
+		});
+
+		postMatches.forEach(function (match, i) {
+			console.log(match, i);
+			//postMatch(match)
+		  })
+	};
+
+	//CHOOSE YOUR TRIP FEATURE
 
 	const handleTrip = (id) => {
 		console.log('hey!');
